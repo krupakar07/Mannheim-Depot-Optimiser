@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mannheim Operations</title>
+<style>
+  :root {
+    --bg: #f3f5f7;
+    --card: #ffffff;
+    --text: #17202a;
+    --muted: #6b7280;
+    --border: #e1e5ea;
+    --accent: #1f2937;
+    --accent-hover: #111827;
+    --sm: #2563eb;
+    --bulky: #059669;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    font-family: Inter, Arial, Helvetica, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+  }
+
+  .app {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  header {
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+    padding: 18px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .brand-mark {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: #111827;
+    color: white;
+    display: grid;
+    place-items: center;
+    font-size: 20px;
+    font-weight: 800;
+  }
+
+  .brand h1 {
+    margin: 0;
+    font-size: 20px;
+    letter-spacing: -.3px;
+  }
+
+  .brand p {
+    margin: 3px 0 0;
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  .status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #4b5563;
+    font-size: 13px;
+  }
+
+  .status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #22c55e;
+  }
+
+  main {
+    width: min(1180px, calc(100% - 40px));
+    margin: 0 auto;
+    padding: 42px 0 60px;
+  }
+
+  .hero {
+    margin-bottom: 28px;
+  }
+
+  .hero h2 {
+    margin: 0 0 8px;
+    font-size: 30px;
+    letter-spacing: -.7px;
+  }
+
+  .hero p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 15px;
+  }
+
+  .modules {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+  }
+
+  .module {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 28px;
+    box-shadow: 0 8px 30px rgba(15, 23, 42, .05);
+    transition: transform .18s ease, box-shadow .18s ease;
+  }
+
+  .module:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 36px rgba(15, 23, 42, .09);
+  }
+
+  .module-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .module-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    display: grid;
+    place-items: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  .module.sm .module-icon {
+    background: #eff6ff;
+    color: var(--sm);
+  }
+
+  .module.bulky .module-icon {
+    background: #ecfdf5;
+    color: var(--bulky);
+  }
+
+  .module h3 {
+    margin: 0 0 8px;
+    font-size: 22px;
+  }
+
+  .module .description {
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.55;
+    font-size: 14px;
+  }
+
+  .features {
+    margin: 22px 0 26px;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 10px;
+  }
+
+  .features li {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    color: #374151;
+    font-size: 14px;
+  }
+
+  .check {
+    width: 19px;
+    height: 19px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-size: 11px;
+    font-weight: 800;
+    flex: 0 0 auto;
+  }
+
+  .sm .check {
+    background: #dbeafe;
+    color: #1d4ed8;
+  }
+
+  .bulky .check {
+    background: #d1fae5;
+    color: #047857;
+  }
+
+  button {
+    border: 0;
+    border-radius: 10px;
+    padding: 12px 17px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    color: #fff;
+    transition: background .15s ease, transform .1s ease;
+  }
+
+  button:active {
+    transform: translateY(1px);
+  }
+
+  .sm button { background: var(--sm); }
+  .sm button:hover { background: #1d4ed8; }
+
+  .bulky button { background: var(--bulky); }
+  .bulky button:hover { background: #047857; }
+
+  .listener-box {
+    margin-top: 24px;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px 20px;
+  }
+
+  .listener-box h4 {
+    margin: 0 0 6px;
+    font-size: 14px;
+  }
+
+  .listener-box p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  code {
+    background: #f1f5f9;
+    padding: 2px 6px;
+    border-radius: 5px;
+    font-size: 12px;
+  }
+
+  footer {
+    margin-top: auto;
+    border-top: 1px solid var(--border);
+    background: #fff;
+    padding: 16px 28px;
+    color: var(--muted);
+    font-size: 12px;
+    text-align: center;
+  }
+
+  @media (max-width: 800px) {
+    header {
+      padding: 16px 18px;
+    }
+
+    main {
+      width: min(100% - 28px, 600px);
+      padding-top: 28px;
+    }
+
+    .modules {
+      grid-template-columns: 1fr;
+    }
+
+    .hero h2 {
+      font-size: 25px;
+    }
+  }
+</style>
+</head>
+
+<body>
+<div class="app">
+
+  <header>
+    <div class="brand">
+      <div class="brand-mark">M</div>
+      <div>
+        <h1>Mannheim Operations</h1>
+        <p>Delivery planning and depot operations</p>
+      </div>
+    </div>
+
+    <div class="status">
+      <span class="status-dot"></span>
+      System ready
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h2>Select Operation</h2>
+      <p>Choose the planning module you want to work with.</p>
+    </section>
+
+    <section class="modules">
+
+      <!-- SMALL & MEDIUM MODULE -->
+      <article class="module sm">
+        <div class="module-icon">📦</div>
+
+        <h3>Small &amp; Medium</h3>
+        <p class="description">
+          Parcel delivery planning, postcode zones, driver allocation,
+          pickups and redeliveries.
+        </p>
+
+        <ul class="features">
+          <li><span class="check">✓</span> ITMS delivery capture</li>
+          <li><span class="check">✓</span> Pickup &amp; redelivery data</li>
+          <li><span class="check">✓</span> Zone-based driver planning</li>
+          <li><span class="check">✓</span> Driver plan export</li>
+        </ul>
+
+        <button type="button" onclick="openSmallMedium()">
+          Open Small &amp; Medium
+        </button>
+      </article>
+
+      <!-- BULKY MODULE -->
+      <article class="module bulky">
+        <div class="module-icon">🚚</div>
+
+        <h3>Bulky</h3>
+        <p class="description">
+          Bulky delivery planning with installation, recycling,
+          postcode assignment and driver planning.
+        </p>
+
+        <ul class="features">
+          <li><span class="check">✓</span> ITMS bulky capture</li>
+          <li><span class="check">✓</span> Installation classification</li>
+          <li><span class="check">✓</span> Recycling classification</li>
+          <li><span class="check">✓</span> Bulky driver plan</li>
+        </ul>
+
+        <button type="button" onclick="openBulky()">
+          Open Bulky
+        </button>
+      </article>
+
+    </section>
+
+    <section class="listener-box">
+      <h4>Independent ITMS listeners</h4>
+      <p>
+        The webpage intentionally uses two separate listener channels.
+        Small &amp; Medium listens for
+        <code>ITMS_SMALL_MEDIUM_CAPTURE_DATA</code>,
+        while Bulky listens for
+        <code>ITMS_BULKY_CAPTURE_DATA</code>.
+        The two extensions are not combined.
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    Mannheim Operations · Small &amp; Medium + Bulky
+  </footer>
+</div>
+
+<script>
+/*
+ * ============================================================
+ * MANNHEIM OPERATIONS — MODULE SHELL
+ * ============================================================
+ *
+ * IMPORTANT:
+ * This page does NOT combine the two ITMS extensions.
+ *
+ * Extension 1:
+ *   Small & Medium extension
+ *
+ * Extension 2:
+ *   Bulky extension
+ *
+ * Each module has its own request and response message types.
+ * The actual planners can be connected later.
+ * ============================================================
+ */
+
+
+/* ------------------------------------------------------------
+   SMALL & MEDIUM
+   ------------------------------------------------------------ */
+
+function openSmallMedium() {
+  // Separate request channel for the Small & Medium extension.
+  window.postMessage({
+    source: 'mannheim-operations',
+    type: 'ITMS_REQUEST_SMALL_MEDIUM_CAPTURE'
+  }, '*');
+
+  console.log('[Mannheim Operations] Small & Medium requested.');
+}
+
+
+/* ------------------------------------------------------------
+   BULKY
+   ------------------------------------------------------------ */
+
+function openBulky() {
+  // Separate request channel for the Bulky extension.
+  window.postMessage({
+    source: 'mannheim-operations',
+    type: 'ITMS_REQUEST_BULKY_CAPTURE'
+  }, '*');
+
+  console.log('[Mannheim Operations] Bulky requested.');
+}
+
+
+/* ------------------------------------------------------------
+   SMALL & MEDIUM RESPONSE LISTENER
+   ------------------------------------------------------------ */
+
+window.addEventListener('message', function(event) {
+  if (event.source !== window) return;
+
+  const data = event.data || {};
+
+  if (
+    data.source !== 'itms-small-medium-capture-extension' ||
+    data.type !== 'ITMS_SMALL_MEDIUM_CAPTURE_DATA'
+  ) {
+    return;
+  }
+
+  console.log(
+    '[Mannheim Operations] Small & Medium capture received:',
+    data.capture
+  );
+
+  /*
+   * Later:
+   * connect the existing Small & Medium planner here.
+   *
+   * Nothing from the Bulky module is processed here.
+   */
+});
+
+
+/* ------------------------------------------------------------
+   BULKY RESPONSE LISTENER
+   ------------------------------------------------------------ */
+
+window.addEventListener('message', function(event) {
+  if (event.source !== window) return;
+
+  const data = event.data || {};
+
+  if (
+    data.source !== 'itms-bulky-capture-extension' ||
+    data.type !== 'ITMS_BULKY_CAPTURE_DATA'
+  ) {
+    return;
+  }
+
+  console.log(
+    '[Mannheim Operations] Bulky capture received:',
+    data.capture
+  );
+
+  /*
+   * Later:
+   * connect the existing Bulky planner here.
+   *
+   * Nothing from the Small & Medium module is processed here.
+   */
+});
+
+
+/* ------------------------------------------------------------
+   DEBUG
+   ------------------------------------------------------------ */
+
+console.log('[Mannheim Operations] Main shell loaded.');
+console.log('[Mannheim Operations] Small & Medium listener: READY');
+console.log('[Mannheim Operations] Bulky listener: READY');
+</script>
+
+</body>
+</html>
